@@ -178,7 +178,7 @@
 
   .day-cell {
     background: var(--surface);
-    min-height: 90px;
+    min-height: 110px;
     padding: 0.35rem;
     vertical-align: top;
     position: relative;
@@ -208,15 +208,24 @@
   .event-chip {
     font-size: 0.6rem;
     font-weight: 600;
-    padding: 2px 5px;
+    padding: 3px 5px;
     border-radius: 4px;
     margin-bottom: 2px;
     cursor: pointer;
-    line-height: 1.3;
+    line-height: 1.2;
+    transition: filter 0.15s;
+  }
+
+  .event-chip .ev-name {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    transition: filter 0.15s;
+  }
+
+  .event-chip .ev-time {
+    font-weight: 400;
+    opacity: 0.75;
+    font-size: 0.55rem;
   }
 
   .event-chip:hover { filter: brightness(0.92); }
@@ -354,7 +363,7 @@
     .header h1 { font-size: 1.3rem; }
     .legend, .controls, .filter-bar { padding-left: 1rem; padding-right: 1rem; }
     .calendar-grid { margin: 0 0.5rem 1rem; }
-    .day-cell { min-height: 70px; padding: 0.25rem; }
+    .day-cell { min-height: 90px; padding: 0.25rem; }
     .event-chip { font-size: 0.5rem; padding: 1px 3px; }
     .controls .month-label { font-size: 1rem; min-width: 150px; }
   }
@@ -597,7 +606,7 @@ function renderCalendar() {
     dayEvents.forEach((ev, i) => {
       const hidden = !activeFilters[ev.club] ? ' hidden' : '';
       const display = i >= maxShow ? ' style="display:none" data-overflow="1"' : '';
-      html += `<div class="event-chip ${ev.club}${hidden}"${display} onclick="openModal('${ev.club}','${ev.name.replace(/'/g,"\\'")}','${dateStr}','${ev.time}')">${ev.name}</div>`;
+      html += `<div class="event-chip ${ev.club}${hidden}"${display} onclick="openModal('${ev.club}','${ev.name.replace(/'/g,"\\'")}','${dateStr}','${ev.time}')"><div class="ev-name">${ev.name}</div><div class="ev-time">${ev.time}</div></div>`;
     });
 
     const visibleCount = dayEvents.filter(e => activeFilters[e.club]).length;
