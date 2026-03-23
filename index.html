@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Volleyball Club Calendar — Spring/Summer 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Anybody:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pva: #2563eb;
+    --pva-light: #dbeafe;
+    --pva-mid: #93bbfd;
+    --power: #dc2626;
+    --power-light: #fee2e2;
+    --power-mid: #fca5a5;
+    --mavs: #16a34a;
+    --mavs-light: #dcfce7;
+    --mavs-mid: #86efac;
+    --bg: #fafaf9;
+    --surface: #ffffff;
+    --text: #1c1917;
+    --text-secondary: #78716c;
+    --border: #e7e5e4;
+    --today-ring: #f59e0b;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    color: white;
+    padding: 2rem 2rem 1.5rem;
+  }
+
+  .header h1 {
+    font-family: 'Anybody', sans-serif;
+    font-weight: 800;
+    font-size: 1.75rem;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+  }
+
+  .header p {
+    font-size: 0.875rem;
+    opacity: 0.7;
+  }
+
+  .legend {
+    display: flex;
+    gap: 1.25rem;
+    padding: 1rem 2rem;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+  }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem 2rem;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .controls button {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.4rem 0.75rem;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text);
+    transition: background 0.15s;
+  }
+
+  .controls button:hover { background: #f5f5f4; }
+
+  .controls .month-label {
+    font-family: 'Anybody', sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    min-width: 200px;
+    text-align: center;
+  }
+
+  .view-toggles {
+    display: flex;
+    gap: 0.25rem;
+    margin-left: auto;
+  }
+
+  .view-toggles button {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.65rem;
+  }
+
+  .view-toggles button.active {
+    background: var(--text);
+    color: white;
+    border-color: var(--text);
+  }
+
+  .filter-bar {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.75rem 2rem;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .filter-btn {
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    padding: 0.3rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.15s;
+    background: var(--surface);
+    color: var(--text);
+  }
+
+  .filter-btn.active-pva { border-color: var(--pva); background: var(--pva-light); color: var(--pva); }
+  .filter-btn.active-power { border-color: var(--power); background: var(--power-light); color: var(--power); }
+  .filter-btn.active-mavs { border-color: var(--mavs); background: var(--mavs-light); color: var(--mavs); }
+  .filter-btn.inactive { opacity: 0.35; }
+
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+    background: var(--border);
+    margin: 0 1rem 1rem;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+
+  .day-header {
+    background: #f5f5f4;
+    padding: 0.5rem;
+    text-align: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+  }
+
+  .day-cell {
+    background: var(--surface);
+    min-height: 90px;
+    padding: 0.35rem;
+    vertical-align: top;
+    position: relative;
+  }
+
+  .day-cell.outside { background: #fafaf9; }
+  .day-cell.outside .day-num { opacity: 0.3; }
+
+  .day-num {
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+    color: var(--text-secondary);
+  }
+
+  .day-cell.today .day-num {
+    background: var(--today-ring);
+    color: white;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .event-chip {
+    font-size: 0.6rem;
+    font-weight: 600;
+    padding: 2px 5px;
+    border-radius: 4px;
+    margin-bottom: 2px;
+    cursor: pointer;
+    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: filter 0.15s;
+  }
+
+  .event-chip:hover { filter: brightness(0.92); }
+
+  .event-chip.pva { background: var(--pva-light); color: var(--pva); border-left: 3px solid var(--pva); }
+  .event-chip.power { background: var(--power-light); color: var(--power); border-left: 3px solid var(--power); }
+  .event-chip.mavs { background: var(--mavs-light); color: var(--mavs); border-left: 3px solid var(--mavs); }
+
+  .event-chip.hidden { display: none; }
+
+  .more-chip {
+    font-size: 0.6rem;
+    color: var(--text-secondary);
+    padding: 1px 5px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  /* Modal */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--surface);
+    border-radius: 16px;
+    padding: 1.5rem;
+    max-width: 380px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  }
+
+  .modal-club {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+  }
+
+  .modal-club.pva { color: var(--pva); }
+  .modal-club.power { color: var(--power); }
+  .modal-club.mavs { color: var(--mavs); }
+
+  .modal-title {
+    font-family: 'Anybody', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .modal-detail {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.25rem;
+  }
+
+  .modal-close {
+    margin-top: 1rem;
+    background: #f5f5f4;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  /* List view */
+  .list-view {
+    display: none;
+    margin: 0 1rem 1rem;
+  }
+
+  .list-view.active { display: block; }
+  .calendar-grid.hidden-view { display: none; }
+
+  .list-day {
+    margin-bottom: 0.75rem;
+  }
+
+  .list-date {
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    padding: 0.25rem 0;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0.35rem;
+  }
+
+  .list-event {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .list-event:hover { background: #f5f5f4; }
+
+  .list-event-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .list-event-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    flex: 1;
+  }
+
+  .list-event-time {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+  }
+
+  .list-event.hidden { display: none; }
+
+  @media (max-width: 700px) {
+    .header { padding: 1.25rem 1rem; }
+    .header h1 { font-size: 1.3rem; }
+    .legend, .controls, .filter-bar { padding-left: 1rem; padding-right: 1rem; }
+    .calendar-grid { margin: 0 0.5rem 1rem; }
+    .day-cell { min-height: 70px; padding: 0.25rem; }
+    .event-chip { font-size: 0.5rem; padding: 1px 3px; }
+    .controls .month-label { font-size: 1rem; min-width: 150px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🏐 Volleyball Club Calendar</h1>
+  <p>Spring & Summer 2026</p>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--pva)"></div> PVA</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--power)"></div> Power</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--mavs)"></div> Mavs</div>
+</div>
+
+<div class="filter-bar">
+  <button class="filter-btn active-pva" data-club="pva" onclick="toggleFilter('pva')">PVA</button>
+  <button class="filter-btn active-power" data-club="power" onclick="toggleFilter('power')">Power</button>
+  <button class="filter-btn active-mavs" data-club="mavs" onclick="toggleFilter('mavs')">Mavs</button>
+</div>
+
+<div class="controls">
+  <button onclick="changeMonth(-1)">← Prev</button>
+  <div class="month-label" id="monthLabel"></div>
+  <button onclick="changeMonth(1)">Next →</button>
+  <div class="view-toggles">
+    <button id="calBtn" class="active" onclick="setView('calendar')">Calendar</button>
+    <button id="listBtn" onclick="setView('list')">List</button>
+  </div>
+</div>
+
+<div class="calendar-grid" id="calendarGrid"></div>
+<div class="list-view" id="listView"></div>
+
+<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-club" id="modalClub"></div>
+    <div class="modal-title" id="modalTitle"></div>
+    <div class="modal-detail" id="modalDate"></div>
+    <div class="modal-detail" id="modalTime"></div>
+    <button class="modal-close" onclick="document.getElementById('modal').classList.remove('open')">Close</button>
+  </div>
+</div>
+
+<script>
+const events = [
+  // PVA - Spring League (Wed/Thu/Sat, 4/29 through 5/30, 2026)
+  // Week 1
+  { club:"pva", name:"Spring League", date:"2026-04-29", time:"TBD", day:"Wed" },
+  { club:"pva", name:"Spring League", date:"2026-04-30", time:"TBD", day:"Thu" },
+  { club:"pva", name:"Spring League", date:"2026-05-02", time:"TBD", day:"Sat" },
+  // Week 2
+  { club:"pva", name:"Spring League", date:"2026-05-06", time:"TBD", day:"Wed" },
+  { club:"pva", name:"Spring League", date:"2026-05-07", time:"TBD", day:"Thu" },
+  { club:"pva", name:"Spring League", date:"2026-05-09", time:"TBD", day:"Sat" },
+  // Week 3
+  { club:"pva", name:"Spring League", date:"2026-05-13", time:"TBD", day:"Wed" },
+  { club:"pva", name:"Spring League", date:"2026-05-14", time:"TBD", day:"Thu" },
+  { club:"pva", name:"Spring League", date:"2026-05-16", time:"TBD", day:"Sat" },
+  // Week 4
+  { club:"pva", name:"Spring League", date:"2026-05-20", time:"TBD", day:"Wed" },
+  { club:"pva", name:"Spring League", date:"2026-05-21", time:"TBD", day:"Thu" },
+  { club:"pva", name:"Spring League", date:"2026-05-23", time:"TBD", day:"Sat" },
+  // Week 5
+  { club:"pva", name:"Spring League", date:"2026-05-27", time:"TBD", day:"Wed" },
+  { club:"pva", name:"Spring League", date:"2026-05-28", time:"TBD", day:"Thu" },
+  { club:"pva", name:"Spring League", date:"2026-05-30", time:"TBD", day:"Sat" },
+
+  // PVA - Fast 4s (Sundays 4/24-5/17 ... 2026 dates: 4/26, 5/3, 5/10, 5/17)
+  { club:"pva", name:"Fast 4s", date:"2026-04-26", time:"4:00–6:00 pm", day:"Sun" },
+  { club:"pva", name:"Fast 4s", date:"2026-05-03", time:"4:00–6:00 pm", day:"Sun" },
+  { club:"pva", name:"Fast 4s", date:"2026-05-10", time:"4:00–6:00 pm", day:"Sun" },
+  { club:"pva", name:"Fast 4s", date:"2026-05-17", time:"4:00–6:00 pm", day:"Sun" },
+
+  // PVA - Rising Quad Series
+  { club:"pva", name:"Rising Quad Series", date:"2026-06-02", time:"7:00–9:00 pm" },
+  { club:"pva", name:"Rising Quad Series", date:"2026-06-09", time:"7:00–9:00 pm" },
+  { club:"pva", name:"Rising Quad Series", date:"2026-06-16", time:"7:00–9:00 pm" },
+  { club:"pva", name:"Rising Quad Series", date:"2026-06-23", time:"7:00–9:00 pm" },
+
+  // PVA - All Skills
+  { club:"pva", name:"All Skills", date:"2026-05-19", time:"5:00–7:00 pm" },
+
+  // PVA - Premier Open Gym
+  { club:"pva", name:"Premier Open Gym", date:"2026-06-03", time:"5:00–6:00 pm" },
+  { club:"pva", name:"Premier Open Gym", date:"2026-06-10", time:"4:30–5:30 pm" },
+  { club:"pva", name:"Premier Open Gym", date:"2026-06-30", time:"4:30–5:30 pm" },
+
+  // PVA - Select Open Gym
+  { club:"pva", name:"Select Open Gym", date:"2026-06-24", time:"4:00–5:30 pm" },
+  { club:"pva", name:"Select Open Gym", date:"2026-07-01", time:"4:00–5:30 pm" },
+  { club:"pva", name:"Select Open Gym", date:"2026-07-08", time:"6:30–8:00 pm" },
+
+  // POWER - Setter's Boot Camp
+  { club:"power", name:"Setter's Boot Camp", date:"2026-05-04", time:"5:00–6:15 pm" },
+  { club:"power", name:"Setter's Boot Camp", date:"2026-05-11", time:"5:00–6:15 pm" },
+
+  // POWER - Ball Control Boot Camp
+  { club:"power", name:"Ball Control Boot Camp", date:"2026-05-06", time:"5:00–6:15 pm" },
+  { club:"power", name:"Ball Control Boot Camp", date:"2026-05-13", time:"5:00–6:15 pm" },
+
+  // POWER - Summer Skills Series
+  { club:"power", name:"Summer Skills Series", date:"2026-05-21", time:"5:00–6:00 pm" },
+  { club:"power", name:"Summer Skills Series", date:"2026-05-28", time:"5:00–6:00 pm" },
+  { club:"power", name:"Summer Skills Series", date:"2026-06-02", time:"5:00–6:00 pm" },
+  { club:"power", name:"Summer Skills Series", date:"2026-06-09", time:"5:00–6:00 pm" },
+  { club:"power", name:"Summer Skills Series", date:"2026-06-16", time:"5:00–6:00 pm" },
+  { club:"power", name:"Summer Skills Series", date:"2026-06-23", time:"5:00–6:00 pm" },
+
+  // POWER - Open Gym
+  { club:"power", name:"Open Gym", date:"2026-04-27", time:"5:30–7:00 pm" },
+  { club:"power", name:"Open Gym", date:"2026-05-18", time:"5:30–7:00 pm" },
+  { club:"power", name:"Open Gym", date:"2026-05-26", time:"5:30–7:00 pm" },
+  { club:"power", name:"Open Gym", date:"2026-06-15", time:"5:00–6:30 pm" },
+  { club:"power", name:"Open Gym", date:"2026-06-23", time:"5:30–7:00 pm" },
+  { club:"power", name:"Open Gym", date:"2026-06-29", time:"5:30–7:00 pm" },
+
+  // POWER - PPL Tuesdays 5-6:30 (3/24 through 5/18)
+  { club:"power", name:"PPL", date:"2026-03-24", time:"5:00–6:30 pm", day:"Tue" },
+  { club:"power", name:"PPL", date:"2026-03-31", time:"5:00–6:30 pm", day:"Tue" },
+  { club:"power", name:"PPL", date:"2026-04-07", time:"5:00–6:30 pm", day:"Tue" },
+  { club:"power", name:"PPL", date:"2026-04-14", time:"5:00–6:30 pm", day:"Tue" },
+  { club:"power", name:"PPL", date:"2026-04-21", time:"5:00–6:30 pm", day:"Tue" },
+  { club:"power", name:"PPL", date:"2026-04-28", time:"5:00–6:30 pm", day:"Tue" },
+  { club:"power", name:"PPL", date:"2026-05-05", time:"5:00–6:30 pm", day:"Tue" },
+  { club:"power", name:"PPL", date:"2026-05-12", time:"5:00–6:30 pm", day:"Tue" },
+
+  // POWER - PPL Wednesdays 7-8 pm
+  { club:"power", name:"PPL", date:"2026-03-25", time:"7:00–8:00 pm", day:"Wed" },
+  { club:"power", name:"PPL", date:"2026-04-01", time:"7:00–8:00 pm", day:"Wed" },
+  { club:"power", name:"PPL", date:"2026-04-08", time:"7:00–8:00 pm", day:"Wed" },
+  { club:"power", name:"PPL", date:"2026-04-22", time:"7:00–8:00 pm", day:"Wed" },
+  { club:"power", name:"PPL", date:"2026-04-29", time:"7:00–8:00 pm", day:"Wed" },
+  { club:"power", name:"PPL", date:"2026-05-06", time:"7:00–8:00 pm", day:"Wed" },
+  { club:"power", name:"PPL", date:"2026-05-13", time:"7:00–8:00 pm", day:"Wed" },
+
+  // MAVS - Advanced Positional Camp
+  { club:"mavs", name:"Adv. Positional Camp", date:"2026-06-15", time:"12:00–2:00 pm" },
+  { club:"mavs", name:"Adv. Positional Camp", date:"2026-06-16", time:"12:00–2:00 pm" },
+  { club:"mavs", name:"Adv. Positional Camp", date:"2026-06-17", time:"12:00–2:00 pm" },
+  { club:"mavs", name:"Adv. Positional Camp", date:"2026-06-18", time:"12:00–2:00 pm" },
+  { club:"mavs", name:"Adv. Positional Camp", date:"2026-07-06", time:"12:00–2:00 pm" },
+  { club:"mavs", name:"Adv. Positional Camp", date:"2026-07-07", time:"12:00–2:00 pm" },
+  { club:"mavs", name:"Adv. Positional Camp", date:"2026-07-08", time:"12:00–2:00 pm" },
+  { club:"mavs", name:"Adv. Positional Camp", date:"2026-07-09", time:"12:00–2:00 pm" },
+  { club:"mavs", name:"Adv. Positional Camp", date:"2026-07-13", time:"12:00–2:00 pm" },
+  { club:"mavs", name:"Adv. Positional Camp", date:"2026-07-14", time:"12:00–2:00 pm" },
+  { club:"mavs", name:"Adv. Positional Camp", date:"2026-07-15", time:"12:00–2:00 pm" },
+  { club:"mavs", name:"Adv. Positional Camp", date:"2026-07-16", time:"12:00–2:00 pm" },
+
+  // MAVS - Advanced All Stars Camp
+  { club:"mavs", name:"Adv. All Stars Camp", date:"2026-06-01", time:"12:00–2:30 pm" },
+  { club:"mavs", name:"Adv. All Stars Camp", date:"2026-06-02", time:"12:00–2:30 pm" },
+  { club:"mavs", name:"Adv. All Stars Camp", date:"2026-06-03", time:"12:00–2:30 pm" },
+  { club:"mavs", name:"Adv. All Stars Camp", date:"2026-06-15", time:"9:00–11:00 am" },
+  { club:"mavs", name:"Adv. All Stars Camp", date:"2026-06-16", time:"9:00–11:00 am" },
+  { club:"mavs", name:"Adv. All Stars Camp", date:"2026-06-17", time:"9:00–11:00 am" },
+  { club:"mavs", name:"Adv. All Stars Camp", date:"2026-06-18", time:"9:00–11:00 am" },
+  { club:"mavs", name:"Adv. All Stars Camp", date:"2026-07-13", time:"9:00–11:00 am" },
+  { club:"mavs", name:"Adv. All Stars Camp", date:"2026-07-14", time:"9:00–11:00 am" },
+  { club:"mavs", name:"Adv. All Stars Camp", date:"2026-07-15", time:"9:00–11:00 am" },
+  { club:"mavs", name:"Adv. All Stars Camp", date:"2026-07-16", time:"9:00–11:00 am" },
+
+  // MAVS - Open Gym
+  { club:"mavs", name:"Open Gym", date:"2026-05-26", time:"4:30–5:30 pm" },
+  { club:"mavs", name:"Open Gym", date:"2026-06-12", time:"5:30–7:00 pm" },
+  { club:"mavs", name:"Open Gym", date:"2026-07-06", time:"4:00–6:00 pm" },
+  { club:"mavs", name:"Open Gym", date:"2026-07-08", time:"6:30–8:00 pm" },
+
+  // MAVS - Tryouts
+  { club:"mavs", name:"Premier Tryout", date:"2026-07-11", time:"9:00 am" },
+  { club:"mavs", name:"Select Tryout", date:"2026-07-12", time:"8:00 am" },
+];
+
+// State
+let currentMonth = 2; // March = 2 (0-indexed)
+let currentYear = 2026;
+const minMonth = 2, minYear = 2026; // March 2026
+const maxMonth = 6, maxYear = 2026;  // July 2026
+let activeFilters = { pva: true, power: true, mavs: true };
+let currentView = 'calendar';
+
+const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const dayNames = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+
+function getEventsForDate(dateStr) {
+  return events.filter(e => e.date === dateStr);
+}
+
+function formatDateStr(y, m, d) {
+  return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+}
+
+function renderCalendar() {
+  const grid = document.getElementById('calendarGrid');
+  grid.innerHTML = '';
+  document.getElementById('monthLabel').textContent = `${monthNames[currentMonth]} ${currentYear}`;
+
+  // Day headers
+  dayNames.forEach(d => {
+    const el = document.createElement('div');
+    el.className = 'day-header';
+    el.textContent = d;
+    grid.appendChild(el);
+  });
+
+  const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+  const prevMonthDays = new Date(currentYear, currentMonth, 0).getDate();
+
+  const today = new Date();
+  const todayStr = formatDateStr(today.getFullYear(), today.getMonth(), today.getDate());
+
+  // Previous month fill
+  for (let i = firstDay - 1; i >= 0; i--) {
+    const cell = document.createElement('div');
+    cell.className = 'day-cell outside';
+    const dayNum = prevMonthDays - i;
+    cell.innerHTML = `<div class="day-num">${dayNum}</div>`;
+    grid.appendChild(cell);
+  }
+
+  // Current month days
+  for (let d = 1; d <= daysInMonth; d++) {
+    const cell = document.createElement('div');
+    const dateStr = formatDateStr(currentYear, currentMonth, d);
+    cell.className = 'day-cell' + (dateStr === todayStr ? ' today' : '');
+
+    const numEl = dateStr === todayStr
+      ? `<div class="day-num"><div style="background:var(--today-ring);color:white;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;">${d}</div></div>`
+      : `<div class="day-num">${d}</div>`;
+
+    let html = numEl;
+    const dayEvents = getEventsForDate(dateStr);
+    const maxShow = 3;
+
+    dayEvents.forEach((ev, i) => {
+      const hidden = !activeFilters[ev.club] ? ' hidden' : '';
+      const display = i >= maxShow ? ' style="display:none" data-overflow="1"' : '';
+      html += `<div class="event-chip ${ev.club}${hidden}"${display} onclick="openModal('${ev.club}','${ev.name.replace(/'/g,"\\'")}','${dateStr}','${ev.time}')">${ev.name}</div>`;
+    });
+
+    const visibleCount = dayEvents.filter(e => activeFilters[e.club]).length;
+    if (visibleCount > maxShow) {
+      html += `<div class="more-chip">+${visibleCount - maxShow} more</div>`;
+    }
+
+    cell.innerHTML = html;
+    grid.appendChild(cell);
+  }
+
+  // Next month fill
+  const totalCells = firstDay + daysInMonth;
+  const remaining = (7 - (totalCells % 7)) % 7;
+  for (let i = 1; i <= remaining; i++) {
+    const cell = document.createElement('div');
+    cell.className = 'day-cell outside';
+    cell.innerHTML = `<div class="day-num">${i}</div>`;
+    grid.appendChild(cell);
+  }
+}
+
+function renderListView() {
+  const container = document.getElementById('listView');
+  container.innerHTML = '';
+
+  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+  const dayNamesFull = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dateStr = formatDateStr(currentYear, currentMonth, d);
+    const dayEvents = getEventsForDate(dateStr);
+    if (dayEvents.length === 0) continue;
+
+    const dateObj = new Date(currentYear, currentMonth, d);
+    const dayBlock = document.createElement('div');
+    dayBlock.className = 'list-day';
+
+    const dateLabel = document.createElement('div');
+    dateLabel.className = 'list-date';
+    dateLabel.textContent = `${dayNamesFull[dateObj.getDay()]}, ${monthNames[currentMonth]} ${d}`;
+    dayBlock.appendChild(dateLabel);
+
+    dayEvents.forEach(ev => {
+      const row = document.createElement('div');
+      row.className = 'list-event' + (!activeFilters[ev.club] ? ' hidden' : '');
+      row.setAttribute('data-club', ev.club);
+      row.onclick = () => openModal(ev.club, ev.name, dateStr, ev.time);
+
+      const dot = document.createElement('div');
+      dot.className = 'list-event-dot';
+      dot.style.background = `var(--${ev.club})`;
+
+      const name = document.createElement('div');
+      name.className = 'list-event-name';
+      name.textContent = ev.name;
+
+      const time = document.createElement('div');
+      time.className = 'list-event-time';
+      time.textContent = ev.time;
+
+      row.appendChild(dot);
+      row.appendChild(name);
+      row.appendChild(time);
+      dayBlock.appendChild(row);
+    });
+
+    // Only show if any events are visible
+    const hasVisible = dayEvents.some(e => activeFilters[e.club]);
+    if (hasVisible) container.appendChild(dayBlock);
+  }
+
+  if (container.children.length === 0) {
+    container.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--text-secondary);">No events this month.</p>';
+  }
+}
+
+function changeMonth(dir) {
+  let newMonth = currentMonth + dir;
+  let newYear = currentYear;
+  if (newMonth < 0) { newMonth = 11; newYear--; }
+  if (newMonth > 11) { newMonth = 0; newYear++; }
+
+  if (newYear < minYear || (newYear === minYear && newMonth < minMonth)) return;
+  if (newYear > maxYear || (newYear === maxYear && newMonth > maxMonth)) return;
+
+  currentMonth = newMonth;
+  currentYear = newYear;
+  render();
+}
+
+function toggleFilter(club) {
+  activeFilters[club] = !activeFilters[club];
+  const btn = document.querySelector(`.filter-btn[data-club="${club}"]`);
+  if (activeFilters[club]) {
+    btn.className = `filter-btn active-${club}`;
+  } else {
+    btn.className = 'filter-btn inactive';
+  }
+  render();
+}
+
+function setView(view) {
+  currentView = view;
+  document.getElementById('calBtn').classList.toggle('active', view === 'calendar');
+  document.getElementById('listBtn').classList.toggle('active', view === 'list');
+  document.getElementById('calendarGrid').classList.toggle('hidden-view', view !== 'calendar');
+  document.getElementById('listView').classList.toggle('active', view === 'list');
+  render();
+}
+
+function openModal(club, name, date, time) {
+  const d = new Date(date + 'T12:00:00');
+  const dayNamesFull = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  document.getElementById('modalClub').textContent = club.toUpperCase();
+  document.getElementById('modalClub').className = 'modal-club ' + club;
+  document.getElementById('modalTitle').textContent = name;
+  document.getElementById('modalDate').textContent = `📅 ${dayNamesFull[d.getDay()]}, ${monthNames[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+  document.getElementById('modalTime').textContent = time === 'TBD' ? '🕐 Time TBD' : `🕐 ${time}`;
+  document.getElementById('modal').classList.add('open');
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modal')) {
+    document.getElementById('modal').classList.remove('open');
+  }
+}
+
+function render() {
+  renderCalendar();
+  renderListView();
+}
+
+render();
+</script>
+</body>
+</html>
