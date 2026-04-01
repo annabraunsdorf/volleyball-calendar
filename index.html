@@ -16,6 +16,9 @@
     --mavs: #16a34a;
     --mavs-light: #dcfce7;
     --mavs-mid: #86efac;
+    --dynasty: #7c3aed;
+    --dynasty-light: #ede9fe;
+    --dynasty-mid: #c4b5fd;
     --bg: #fafaf9;
     --surface: #ffffff;
     --text: #1c1917;
@@ -152,6 +155,7 @@
   .filter-btn.active-pva { border-color: var(--pva); background: var(--pva-light); color: var(--pva); }
   .filter-btn.active-power { border-color: var(--power); background: var(--power-light); color: var(--power); }
   .filter-btn.active-mavs { border-color: var(--mavs); background: var(--mavs-light); color: var(--mavs); }
+  .filter-btn.active-dynasty { border-color: var(--dynasty); background: var(--dynasty-light); color: var(--dynasty); }
   .filter-btn.inactive { opacity: 0.35; }
 
   .calendar-grid {
@@ -233,6 +237,7 @@
   .event-chip.pva { background: var(--pva-light); color: var(--pva); border-left: 3px solid var(--pva); }
   .event-chip.power { background: var(--power-light); color: var(--power); border-left: 3px solid var(--power); }
   .event-chip.mavs { background: var(--mavs-light); color: var(--mavs); border-left: 3px solid var(--mavs); }
+  .event-chip.dynasty { background: var(--dynasty-light); color: var(--dynasty); border-left: 3px solid var(--dynasty); }
 
   .event-chip.hidden { display: none; }
 
@@ -277,6 +282,7 @@
   .modal-club.pva { color: var(--pva); }
   .modal-club.power { color: var(--power); }
   .modal-club.mavs { color: var(--mavs); }
+  .modal-club.dynasty { color: var(--dynasty); }
 
   .modal-title {
     font-family: 'Anybody', sans-serif;
@@ -380,12 +386,14 @@
   <div class="legend-item"><div class="legend-dot" style="background:var(--pva)"></div> PVA</div>
   <div class="legend-item"><div class="legend-dot" style="background:var(--power)"></div> Power</div>
   <div class="legend-item"><div class="legend-dot" style="background:var(--mavs)"></div> Mavs</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--dynasty)"></div> Dynasty</div>
 </div>
 
 <div class="filter-bar">
   <button class="filter-btn active-pva" data-club="pva" onclick="toggleFilter('pva')">PVA</button>
   <button class="filter-btn active-power" data-club="power" onclick="toggleFilter('power')">Power</button>
   <button class="filter-btn active-mavs" data-club="mavs" onclick="toggleFilter('mavs')">Mavs</button>
+  <button class="filter-btn active-dynasty" data-club="dynasty" onclick="toggleFilter('dynasty')">Dynasty</button>
 </div>
 
 <div class="controls">
@@ -547,6 +555,38 @@ const events = [
   // MAVS - Tryouts
   { club:"mavs", name:"Premier Tryout", date:"2026-07-11", time:"9:00 am" },
   { club:"mavs", name:"Select Tryout", date:"2026-07-12", time:"8:00 am" },
+
+  // DYNASTY - Open Gym
+  { club:"dynasty", name:"Open Gym", date:"2026-05-06", time:"5:30–7:00 pm" },
+  { club:"dynasty", name:"Open Gym", date:"2026-05-17", time:"10:00–11:30 am" },
+  { club:"dynasty", name:"Open Gym", date:"2026-06-15", time:"5:30–7:00 pm" },
+
+  // DYNASTY - Spring Academy (Monday track)
+  { club:"dynasty", name:"Spring Academy (Mon)", date:"2026-04-20", time:"5:00–6:30 pm" },
+  { club:"dynasty", name:"Spring Academy (Mon)", date:"2026-04-27", time:"5:00–6:30 pm" },
+  { club:"dynasty", name:"Spring Academy (Mon)", date:"2026-05-04", time:"5:00–6:30 pm" },
+  { club:"dynasty", name:"Spring Academy (Mon)", date:"2026-05-11", time:"5:00–6:30 pm" },
+  { club:"dynasty", name:"Spring Academy (Mon)", date:"2026-05-18", time:"5:00–6:30 pm" },
+  { club:"dynasty", name:"Spring Academy (Mon)", date:"2026-05-25", time:"5:00–6:30 pm" },
+  { club:"dynasty", name:"Spring Academy (Mon)", date:"2026-06-01", time:"5:00–6:30 pm" },
+
+  // DYNASTY - Spring Academy (Sunday 12-1:30 track)
+  { club:"dynasty", name:"Spring Academy (Sun 12p)", date:"2026-04-26", time:"12:00–1:30 pm" },
+  { club:"dynasty", name:"Spring Academy (Sun 12p)", date:"2026-05-03", time:"12:00–1:30 pm" },
+  { club:"dynasty", name:"Spring Academy (Sun 12p)", date:"2026-05-10", time:"12:00–1:30 pm" },
+  { club:"dynasty", name:"Spring Academy (Sun 12p)", date:"2026-05-17", time:"12:00–1:30 pm" },
+  { club:"dynasty", name:"Spring Academy (Sun 12p)", date:"2026-05-24", time:"12:00–1:30 pm" },
+  { club:"dynasty", name:"Spring Academy (Sun 12p)", date:"2026-05-31", time:"12:00–1:30 pm" },
+  { club:"dynasty", name:"Spring Academy (Sun 12p)", date:"2026-06-07", time:"12:00–1:30 pm" },
+
+  // DYNASTY - Spring Academy (Sunday 2-3:30 track)
+  { club:"dynasty", name:"Spring Academy (Sun 2p)", date:"2026-04-26", time:"2:00–3:30 pm" },
+  { club:"dynasty", name:"Spring Academy (Sun 2p)", date:"2026-05-03", time:"2:00–3:30 pm" },
+  { club:"dynasty", name:"Spring Academy (Sun 2p)", date:"2026-05-10", time:"2:00–3:30 pm" },
+  { club:"dynasty", name:"Spring Academy (Sun 2p)", date:"2026-05-17", time:"2:00–3:30 pm" },
+  { club:"dynasty", name:"Spring Academy (Sun 2p)", date:"2026-05-24", time:"2:00–3:30 pm" },
+  { club:"dynasty", name:"Spring Academy (Sun 2p)", date:"2026-05-31", time:"2:00–3:30 pm" },
+  { club:"dynasty", name:"Spring Academy (Sun 2p)", date:"2026-06-07", time:"2:00–3:30 pm" },
 ];
 
 // State
@@ -554,7 +594,7 @@ let currentMonth = 2; // March = 2 (0-indexed)
 let currentYear = 2026;
 const minMonth = 2, minYear = 2026; // March 2026
 const maxMonth = 6, maxYear = 2026;  // July 2026
-let activeFilters = { pva: true, power: true, mavs: true };
+let activeFilters = { pva: true, power: true, mavs: true, dynasty: true };
 let currentView = 'calendar';
 
 const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
