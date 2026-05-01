@@ -182,7 +182,7 @@
 
   .day-cell {
     background: var(--surface);
-    min-height: 110px;
+    min-height: 140px;
     padding: 0.35rem;
     vertical-align: top;
     position: relative;
@@ -593,6 +593,11 @@ const events = [
   { club:"dynasty", name:"Summer Session", date:"2026-07-24", time:"TBD" },
   { club:"dynasty", name:"Summer Session", date:"2026-07-31", time:"TBD" },
 
+  // DYNASTY - Advanced Skills Camp
+  { club:"dynasty", name:"Adv. Skills Camp", date:"2026-07-07", time:"5:30–7:00 pm" },
+  { club:"dynasty", name:"Adv. Skills Camp", date:"2026-07-08", time:"5:30–7:00 pm" },
+  { club:"dynasty", name:"Adv. Skills Camp", date:"2026-07-09", time:"5:30–7:00 pm" },
+
   // DYNASTY - Tryouts
   { club:"dynasty", name:"Tryout", date:"2026-07-11", time:"12:00–1:30 pm" },
   { club:"dynasty", name:"Tryout", date:"2026-07-12", time:"8:00–9:30 am" },
@@ -656,18 +661,11 @@ function renderCalendar() {
 
     let html = numEl;
     const dayEvents = getEventsForDate(dateStr);
-    const maxShow = 3;
 
     dayEvents.forEach((ev, i) => {
       const hidden = !activeFilters[ev.club] ? ' hidden' : '';
-      const display = i >= maxShow ? ' style="display:none" data-overflow="1"' : '';
-      html += `<div class="event-chip ${ev.club}${hidden}"${display} onclick="openModal('${ev.club}','${ev.name.replace(/'/g,"\\'")}','${dateStr}','${ev.time}')"><div class="ev-name">${ev.name}</div><div class="ev-time">${ev.time}</div></div>`;
+      html += `<div class="event-chip ${ev.club}${hidden}" onclick="openModal('${ev.club}','${ev.name.replace(/'/g,"\\'")}','${dateStr}','${ev.time}')"><div class="ev-name">${ev.name}</div><div class="ev-time">${ev.time}</div></div>`;
     });
-
-    const visibleCount = dayEvents.filter(e => activeFilters[e.club]).length;
-    if (visibleCount > maxShow) {
-      html += `<div class="more-chip">+${visibleCount - maxShow} more</div>`;
-    }
 
     cell.innerHTML = html;
     grid.appendChild(cell);
