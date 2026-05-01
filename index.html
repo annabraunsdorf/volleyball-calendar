@@ -419,35 +419,10 @@
   </div>
 </div>
 
+
 <script>
 const events = [
-  // PVA - Spring League (Wed/Thu/Sat, 4/29 through 5/30, 2026)
-  // Week 1
-  { club:"pva", name:"Spring League", date:"2026-04-29", time:"TBD", day:"Wed" },
-  { club:"pva", name:"Spring League", date:"2026-04-30", time:"TBD", day:"Thu" },
-  { club:"pva", name:"Spring League", date:"2026-05-02", time:"TBD", day:"Sat" },
-  // Week 2
-  { club:"pva", name:"Spring League", date:"2026-05-06", time:"TBD", day:"Wed" },
-  { club:"pva", name:"Spring League", date:"2026-05-07", time:"TBD", day:"Thu" },
-  { club:"pva", name:"Spring League", date:"2026-05-09", time:"TBD", day:"Sat" },
-  // Week 3
-  { club:"pva", name:"Spring League", date:"2026-05-13", time:"TBD", day:"Wed" },
-  { club:"pva", name:"Spring League", date:"2026-05-14", time:"TBD", day:"Thu" },
-  { club:"pva", name:"Spring League", date:"2026-05-16", time:"TBD", day:"Sat" },
-  // Week 4
-  { club:"pva", name:"Spring League", date:"2026-05-20", time:"TBD", day:"Wed" },
-  { club:"pva", name:"Spring League", date:"2026-05-21", time:"TBD", day:"Thu" },
-  { club:"pva", name:"Spring League", date:"2026-05-23", time:"TBD", day:"Sat" },
-  // Week 5
-  { club:"pva", name:"Spring League", date:"2026-05-27", time:"TBD", day:"Wed" },
-  { club:"pva", name:"Spring League", date:"2026-05-28", time:"TBD", day:"Thu" },
-  { club:"pva", name:"Spring League", date:"2026-05-30", time:"TBD", day:"Sat" },
-
-  // PVA - Fast 4s (Sundays 4/24-5/17 ... 2026 dates: 4/26, 5/3, 5/10, 5/17)
-  { club:"pva", name:"Fast 4s", date:"2026-04-26", time:"4:00–6:00 pm", day:"Sun" },
-  { club:"pva", name:"Fast 4s", date:"2026-05-03", time:"4:00–6:00 pm", day:"Sun" },
-  { club:"pva", name:"Fast 4s", date:"2026-05-10", time:"4:00–6:00 pm", day:"Sun" },
-  { club:"pva", name:"Fast 4s", date:"2026-05-17", time:"4:00–6:00 pm", day:"Sun" },
+  // === PVA ===
 
   // PVA - Rising Quad Series
   { club:"pva", name:"Rising Quad Series", date:"2026-06-02", time:"7:00–9:00 pm" },
@@ -471,6 +446,34 @@ const events = [
   { club:"pva", name:"Select Open Gym", date:"2026-07-01", time:"4:00–5:30 pm" },
   { club:"pva", name:"Select Open Gym", date:"2026-07-08", time:"6:30–8:00 pm" },
 
+  // PVA - Team Commitment Prep Clinic
+  { club:"pva", name:"Team Commit Prep Clinic", date:"2026-07-06", time:"9:00–11:00 am" },
+  { club:"pva", name:"Team Commit Prep Clinic", date:"2026-07-07", time:"9:00–11:00 am" },
+  { club:"pva", name:"Team Commit Prep Clinic", date:"2026-07-08", time:"9:00–11:00 am" },
+  { club:"pva", name:"Team Commit Prep Clinic", date:"2026-07-09", time:"9:00–11:00 am" },
+
+  // PVA - All Skills Day Camp
+  { club:"pva", name:"All Skills Day Camp", date:"2026-06-10", time:"9:00 am–3:00 pm" },
+  { club:"pva", name:"All Skills Day Camp", date:"2026-06-24", time:"9:00 am–3:00 pm" },
+
+  // PVA - Premier Tryout
+  { club:"pva", name:"Premier Tryout", date:"2026-07-11", time:"11:30 am–1:00 pm" },
+
+  // PVA - Select Tryout
+  { club:"pva", name:"Select Tryout", date:"2026-07-12", time:"2:00–3:30 pm" },
+
+  // PVA - Mastering Defense
+  { club:"pva", name:"Mastering Defense", date:"2026-06-08", time:"10:00 am–12:00 pm" },
+
+  // PVA - Mastering Hitting and Passing
+  { club:"pva", name:"Mastering Hitting/Passing", date:"2026-06-03", time:"10:00 am–12:00 pm" },
+
+  // PVA - Mastering Serve and Serve Receive
+  { club:"pva", name:"Mastering Serve/SR", date:"2026-06-02", time:"10:00 am–12:00 pm" },
+  { club:"pva", name:"Mastering Serve/SR", date:"2026-06-16", time:"10:00 am–12:00 pm" },
+
+  // === POWER ===
+
   // POWER - Setter's Boot Camp
   { club:"power", name:"Setter's Boot Camp", date:"2026-05-04", time:"5:00–6:15 pm" },
   { club:"power", name:"Setter's Boot Camp", date:"2026-05-11", time:"5:00–6:15 pm" },
@@ -487,32 +490,23 @@ const events = [
   { club:"power", name:"Summer Skills Series", date:"2026-06-18", time:"5:00–6:00 pm" },
   { club:"power", name:"Summer Skills Series", date:"2026-06-25", time:"5:00–6:00 pm" },
 
-  // POWER - Open Gym
-  { club:"power", name:"Open Gym", date:"2026-04-27", time:"5:30–7:00 pm" },
+  // POWER - Open Gym (May onward)
   { club:"power", name:"Open Gym", date:"2026-05-18", time:"5:30–7:00 pm" },
   { club:"power", name:"Open Gym", date:"2026-05-26", time:"5:30–7:00 pm" },
   { club:"power", name:"Open Gym", date:"2026-06-15", time:"5:00–6:30 pm" },
   { club:"power", name:"Open Gym", date:"2026-06-23", time:"5:30–7:00 pm" },
   { club:"power", name:"Open Gym", date:"2026-06-29", time:"5:30–7:00 pm" },
 
-  // POWER - PPL Tuesdays 5-6:30 (3/24 through 5/18)
-  { club:"power", name:"PPL", date:"2026-03-24", time:"5:00–6:30 pm", day:"Tue" },
-  { club:"power", name:"PPL", date:"2026-03-31", time:"5:00–6:30 pm", day:"Tue" },
-  { club:"power", name:"PPL", date:"2026-04-07", time:"5:00–6:30 pm", day:"Tue" },
-  { club:"power", name:"PPL", date:"2026-04-14", time:"5:00–6:30 pm", day:"Tue" },
-  { club:"power", name:"PPL", date:"2026-04-21", time:"5:00–6:30 pm", day:"Tue" },
-  { club:"power", name:"PPL", date:"2026-04-28", time:"5:00–6:30 pm", day:"Tue" },
+  // POWER - PPL (May dates only)
   { club:"power", name:"PPL", date:"2026-05-05", time:"5:00–6:30 pm", day:"Tue" },
   { club:"power", name:"PPL", date:"2026-05-12", time:"5:00–6:30 pm", day:"Tue" },
-
-  // POWER - PPL Wednesdays 7-8 pm
-  { club:"power", name:"PPL", date:"2026-03-25", time:"7:00–8:00 pm", day:"Wed" },
-  { club:"power", name:"PPL", date:"2026-04-01", time:"7:00–8:00 pm", day:"Wed" },
-  { club:"power", name:"PPL", date:"2026-04-08", time:"7:00–8:00 pm", day:"Wed" },
-  { club:"power", name:"PPL", date:"2026-04-22", time:"7:00–8:00 pm", day:"Wed" },
-  { club:"power", name:"PPL", date:"2026-04-29", time:"7:00–8:00 pm", day:"Wed" },
   { club:"power", name:"PPL", date:"2026-05-06", time:"7:00–8:00 pm", day:"Wed" },
   { club:"power", name:"PPL", date:"2026-05-13", time:"7:00–8:00 pm", day:"Wed" },
+
+  // POWER - Try Your Heart Out Clinic
+  { club:"power", name:"Try Your Heart Out", date:"2026-07-08", time:"5:00–7:00 pm" },
+
+  // === MAVS ===
 
   // MAVS - Advanced Positional Camp
   { club:"mavs", name:"Adv. Positional Camp", date:"2026-06-15", time:"12:00–2:00 pm" },
@@ -548,52 +542,68 @@ const events = [
   { club:"mavs", name:"Open Gym", date:"2026-07-08", time:"6:30–8:00 pm" },
 
   // MAVS - Tryout Prep
-  { club:"mavs", name:"Tryout Prep", date:"2026-04-26", time:"10:00–11:30 am" },
   { club:"mavs", name:"Tryout Prep", date:"2026-05-29", time:"6:00–7:30 pm" },
   { club:"mavs", name:"Tryout Prep", date:"2026-06-27", time:"9:00–10:30 am" },
+
+  // MAVS - High Performance Camp
+  { club:"mavs", name:"High Performance Camp", date:"2026-06-08", time:"8:00–10:00 am" },
+  { club:"mavs", name:"High Performance Camp", date:"2026-06-09", time:"8:00–10:00 am" },
+  { club:"mavs", name:"High Performance Camp", date:"2026-06-10", time:"8:00–10:00 am" },
+  { club:"mavs", name:"High Performance Camp", date:"2026-06-11", time:"8:00–10:00 am" },
+
+  // MAVS - 816 All-Stars Camp (June 22-25)
+  { club:"mavs", name:"816 All-Stars Camp", date:"2026-06-22", time:"12:00–2:00 pm" },
+  { club:"mavs", name:"816 All-Stars Camp", date:"2026-06-23", time:"12:00–2:00 pm" },
+  { club:"mavs", name:"816 All-Stars Camp", date:"2026-06-24", time:"12:00–2:00 pm" },
+  { club:"mavs", name:"816 All-Stars Camp", date:"2026-06-25", time:"12:00–2:00 pm" },
+
+  // MAVS - 816 All-Stars Camp (June 29-July 2)
+  { club:"mavs", name:"816 All-Stars Camp", date:"2026-06-29", time:"9:00–11:00 am" },
+  { club:"mavs", name:"816 All-Stars Camp", date:"2026-06-30", time:"9:00–11:00 am" },
+  { club:"mavs", name:"816 All-Stars Camp", date:"2026-07-01", time:"9:00–11:00 am" },
+  { club:"mavs", name:"816 All-Stars Camp", date:"2026-07-02", time:"9:00–11:00 am" },
 
   // MAVS - Tryouts
   { club:"mavs", name:"Premier Tryout", date:"2026-07-11", time:"9:00 am" },
   { club:"mavs", name:"Select Tryout", date:"2026-07-12", time:"8:00 am" },
+
+  // === DYNASTY ===
 
   // DYNASTY - Open Gym
   { club:"dynasty", name:"Open Gym", date:"2026-05-06", time:"5:30–7:00 pm" },
   { club:"dynasty", name:"Open Gym", date:"2026-05-17", time:"10:00–11:30 am" },
   { club:"dynasty", name:"Open Gym", date:"2026-06-15", time:"5:30–7:00 pm" },
 
-  // DYNASTY - Spring Academy (Monday track)
-  { club:"dynasty", name:"Spring Academy (Mon)", date:"2026-04-20", time:"5:00–6:30 pm" },
-  { club:"dynasty", name:"Spring Academy (Mon)", date:"2026-04-27", time:"5:00–6:30 pm" },
-  { club:"dynasty", name:"Spring Academy (Mon)", date:"2026-05-04", time:"5:00–6:30 pm" },
-  { club:"dynasty", name:"Spring Academy (Mon)", date:"2026-05-11", time:"5:00–6:30 pm" },
-  { club:"dynasty", name:"Spring Academy (Mon)", date:"2026-05-18", time:"5:00–6:30 pm" },
-  { club:"dynasty", name:"Spring Academy (Mon)", date:"2026-05-25", time:"5:00–6:30 pm" },
-  { club:"dynasty", name:"Spring Academy (Mon)", date:"2026-06-01", time:"5:00–6:30 pm" },
+  // DYNASTY - Summer Session (Sundays)
+  { club:"dynasty", name:"Summer Session", date:"2026-06-14", time:"TBD" },
+  { club:"dynasty", name:"Summer Session", date:"2026-06-21", time:"TBD" },
+  { club:"dynasty", name:"Summer Session", date:"2026-06-28", time:"TBD" },
+  { club:"dynasty", name:"Summer Session", date:"2026-07-05", time:"TBD" },
+  { club:"dynasty", name:"Summer Session", date:"2026-07-12", time:"TBD" },
+  { club:"dynasty", name:"Summer Session", date:"2026-07-19", time:"TBD" },
+  { club:"dynasty", name:"Summer Session", date:"2026-07-26", time:"TBD" },
+  { club:"dynasty", name:"Summer Session", date:"2026-08-02", time:"TBD" },
 
-  // DYNASTY - Spring Academy (Sunday 12-1:30 track)
-  { club:"dynasty", name:"Spring Academy (Sun 12p)", date:"2026-04-26", time:"12:00–1:30 pm" },
-  { club:"dynasty", name:"Spring Academy (Sun 12p)", date:"2026-05-03", time:"12:00–1:30 pm" },
-  { club:"dynasty", name:"Spring Academy (Sun 12p)", date:"2026-05-10", time:"12:00–1:30 pm" },
-  { club:"dynasty", name:"Spring Academy (Sun 12p)", date:"2026-05-17", time:"12:00–1:30 pm" },
-  { club:"dynasty", name:"Spring Academy (Sun 12p)", date:"2026-05-24", time:"12:00–1:30 pm" },
-  { club:"dynasty", name:"Spring Academy (Sun 12p)", date:"2026-05-31", time:"12:00–1:30 pm" },
-  { club:"dynasty", name:"Spring Academy (Sun 12p)", date:"2026-06-07", time:"12:00–1:30 pm" },
+  // DYNASTY - Summer Session (Fridays)
+  { club:"dynasty", name:"Summer Session", date:"2026-06-19", time:"TBD" },
+  { club:"dynasty", name:"Summer Session", date:"2026-06-26", time:"TBD" },
+  { club:"dynasty", name:"Summer Session", date:"2026-07-03", time:"TBD" },
+  { club:"dynasty", name:"Summer Session", date:"2026-07-10", time:"TBD" },
+  { club:"dynasty", name:"Summer Session", date:"2026-07-17", time:"TBD" },
+  { club:"dynasty", name:"Summer Session", date:"2026-07-24", time:"TBD" },
+  { club:"dynasty", name:"Summer Session", date:"2026-07-31", time:"TBD" },
 
-  // DYNASTY - Spring Academy (Sunday 2-3:30 track)
-  { club:"dynasty", name:"Spring Academy (Sun 2p)", date:"2026-04-26", time:"2:00–3:30 pm" },
-  { club:"dynasty", name:"Spring Academy (Sun 2p)", date:"2026-05-03", time:"2:00–3:30 pm" },
-  { club:"dynasty", name:"Spring Academy (Sun 2p)", date:"2026-05-10", time:"2:00–3:30 pm" },
-  { club:"dynasty", name:"Spring Academy (Sun 2p)", date:"2026-05-17", time:"2:00–3:30 pm" },
-  { club:"dynasty", name:"Spring Academy (Sun 2p)", date:"2026-05-24", time:"2:00–3:30 pm" },
-  { club:"dynasty", name:"Spring Academy (Sun 2p)", date:"2026-05-31", time:"2:00–3:30 pm" },
-  { club:"dynasty", name:"Spring Academy (Sun 2p)", date:"2026-06-07", time:"2:00–3:30 pm" },
+  // DYNASTY - Tryouts
+  { club:"dynasty", name:"Tryout", date:"2026-07-11", time:"12:00–1:30 pm" },
+  { club:"dynasty", name:"Tryout", date:"2026-07-12", time:"8:00–9:30 am" },
+  { club:"dynasty", name:"Tryout", date:"2026-07-13", time:"2:00–3:30 pm" },
 ];
 
 // State
-let currentMonth = 2; // March = 2 (0-indexed)
+let currentMonth = 4; // May (0-indexed)
 let currentYear = 2026;
-const minMonth = 2, minYear = 2026; // March 2026
-const maxMonth = 6, maxYear = 2026;  // July 2026
+const minMonth = 4, minYear = 2026; // May 2026
+const maxMonth = 7, maxYear = 2026;  // August 2026
 let activeFilters = { pva: true, power: true, mavs: true, dynasty: true };
 let currentView = 'calendar';
 
@@ -613,7 +623,6 @@ function renderCalendar() {
   grid.innerHTML = '';
   document.getElementById('monthLabel').textContent = `${monthNames[currentMonth]} ${currentYear}`;
 
-  // Day headers
   dayNames.forEach(d => {
     const el = document.createElement('div');
     el.className = 'day-header';
@@ -628,7 +637,6 @@ function renderCalendar() {
   const today = new Date();
   const todayStr = formatDateStr(today.getFullYear(), today.getMonth(), today.getDate());
 
-  // Previous month fill
   for (let i = firstDay - 1; i >= 0; i--) {
     const cell = document.createElement('div');
     cell.className = 'day-cell outside';
@@ -637,7 +645,6 @@ function renderCalendar() {
     grid.appendChild(cell);
   }
 
-  // Current month days
   for (let d = 1; d <= daysInMonth; d++) {
     const cell = document.createElement('div');
     const dateStr = formatDateStr(currentYear, currentMonth, d);
@@ -666,7 +673,6 @@ function renderCalendar() {
     grid.appendChild(cell);
   }
 
-  // Next month fill
   const totalCells = firstDay + daysInMonth;
   const remaining = (7 - (totalCells % 7)) % 7;
   for (let i = 1; i <= remaining; i++) {
@@ -722,7 +728,6 @@ function renderListView() {
       dayBlock.appendChild(row);
     });
 
-    // Only show if any events are visible
     const hasVisible = dayEvents.some(e => activeFilters[e.club]);
     if (hasVisible) container.appendChild(dayBlock);
   }
